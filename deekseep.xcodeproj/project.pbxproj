@@ -6,6 +6,11 @@
 	objectVersion = 77;
 	objects = {
 
+/* Begin PBXBuildFile section */
+		DD6BFA532DAA3A9E0077AA68 /* LaTeXSwiftUI in Frameworks */ = {isa = PBXBuildFile; productRef = DD6BFA522DAA3A9E0077AA68 /* LaTeXSwiftUI */; };
+		DD6BFA552DAA3AA10077AA68 /* MarkdownUI in Frameworks */ = {isa = PBXBuildFile; productRef = DD6BFA542DAA3AA10077AA68 /* MarkdownUI */; };
+/* End PBXBuildFile section */
+
 /* Begin PBXContainerItemProxy section */
 		DD6BFA2B2DAA35310077AA68 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
@@ -52,6 +57,8 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				DD6BFA532DAA3A9E0077AA68 /* LaTeXSwiftUI in Frameworks */,
+				DD6BFA552DAA3AA10077AA68 /* MarkdownUI in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -78,6 +85,7 @@
 				DD6BFA1E2DAA35300077AA68 /* deekseep */,
 				DD6BFA2D2DAA35310077AA68 /* deekseepTests */,
 				DD6BFA372DAA35310077AA68 /* deekseepUITests */,
+				DD6BFA512DAA3A9E0077AA68 /* Frameworks */,
 				DD6BFA1D2DAA35300077AA68 /* Products */,
 			);
 			sourceTree = "<group>";
@@ -90,6 +98,13 @@
 				DD6BFA342DAA35310077AA68 /* deekseepUITests.xctest */,
 			);
 			name = Products;
+			sourceTree = "<group>";
+		};
+		DD6BFA512DAA3A9E0077AA68 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			name = Frameworks;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -112,6 +127,8 @@
 			);
 			name = deekseep;
 			packageProductDependencies = (
+				DD6BFA522DAA3A9E0077AA68 /* LaTeXSwiftUI */,
+				DD6BFA542DAA3AA10077AA68 /* MarkdownUI */,
 			);
 			productName = deekseep;
 			productReference = DD6BFA1C2DAA35300077AA68 /* deekseep.app */;
@@ -195,6 +212,10 @@
 			);
 			mainGroup = DD6BFA132DAA35300077AA68;
 			minimizedProjectReferenceProxies = 1;
+			packageReferences = (
+				DD6BFA4F2DAA39790077AA68 /* XCRemoteSwiftPackageReference "LaTeXSwiftUI" */,
+				DD6BFA502DAA3A930077AA68 /* XCRemoteSwiftPackageReference "swift-markdown-ui" */,
+			);
 			preferredProjectObjectVersion = 77;
 			productRefGroup = DD6BFA1D2DAA35300077AA68 /* Products */;
 			projectDirPath = "";
@@ -393,6 +414,8 @@
 				CURRENT_PROJECT_VERSION = 1;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_KEY_CFBundleDisplayName = DeekSeep;
+				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.utilities";
 				"INFOPLIST_KEY_UIApplicationSceneManifest_Generation[sdk=iphoneos*]" = YES;
 				"INFOPLIST_KEY_UIApplicationSceneManifest_Generation[sdk=iphonesimulator*]" = YES;
 				"INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents[sdk=iphoneos*]" = YES;
@@ -403,10 +426,10 @@
 				"INFOPLIST_KEY_UIStatusBarStyle[sdk=iphonesimulator*]" = UIStatusBarStyleDefault;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
-				IPHONEOS_DEPLOYMENT_TARGET = 18.4;
+				IPHONEOS_DEPLOYMENT_TARGET = 18.0;
 				LD_RUNPATH_SEARCH_PATHS = "@executable_path/Frameworks";
 				"LD_RUNPATH_SEARCH_PATHS[sdk=macosx*]" = "@executable_path/../Frameworks";
-				MACOSX_DEPLOYMENT_TARGET = 15.4;
+				MACOSX_DEPLOYMENT_TARGET = 14.0;
 				MARKETING_VERSION = 1.0;
 				PRODUCT_BUNDLE_IDENTIFIER = goge.deekseep;
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -430,6 +453,8 @@
 				CURRENT_PROJECT_VERSION = 1;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_KEY_CFBundleDisplayName = DeekSeep;
+				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.utilities";
 				"INFOPLIST_KEY_UIApplicationSceneManifest_Generation[sdk=iphoneos*]" = YES;
 				"INFOPLIST_KEY_UIApplicationSceneManifest_Generation[sdk=iphonesimulator*]" = YES;
 				"INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents[sdk=iphoneos*]" = YES;
@@ -440,10 +465,10 @@
 				"INFOPLIST_KEY_UIStatusBarStyle[sdk=iphonesimulator*]" = UIStatusBarStyleDefault;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
-				IPHONEOS_DEPLOYMENT_TARGET = 18.4;
+				IPHONEOS_DEPLOYMENT_TARGET = 18.0;
 				LD_RUNPATH_SEARCH_PATHS = "@executable_path/Frameworks";
 				"LD_RUNPATH_SEARCH_PATHS[sdk=macosx*]" = "@executable_path/../Frameworks";
-				MACOSX_DEPLOYMENT_TARGET = 15.4;
+				MACOSX_DEPLOYMENT_TARGET = 14.0;
 				MARKETING_VERSION = 1.0;
 				PRODUCT_BUNDLE_IDENTIFIER = goge.deekseep;
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -583,6 +608,38 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
+
+/* Begin XCRemoteSwiftPackageReference section */
+		DD6BFA4F2DAA39790077AA68 /* XCRemoteSwiftPackageReference "LaTeXSwiftUI" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/colinc86/LaTeXSwiftUI";
+			requirement = {
+				branch = main;
+				kind = branch;
+			};
+		};
+		DD6BFA502DAA3A930077AA68 /* XCRemoteSwiftPackageReference "swift-markdown-ui" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/gonzalezreal/swift-markdown-ui.git";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 2.4.1;
+			};
+		};
+/* End XCRemoteSwiftPackageReference section */
+
+/* Begin XCSwiftPackageProductDependency section */
+		DD6BFA522DAA3A9E0077AA68 /* LaTeXSwiftUI */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = DD6BFA4F2DAA39790077AA68 /* XCRemoteSwiftPackageReference "LaTeXSwiftUI" */;
+			productName = LaTeXSwiftUI;
+		};
+		DD6BFA542DAA3AA10077AA68 /* MarkdownUI */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = DD6BFA502DAA3A930077AA68 /* XCRemoteSwiftPackageReference "swift-markdown-ui" */;
+			productName = MarkdownUI;
+		};
+/* End XCSwiftPackageProductDependency section */
 	};
 	rootObject = DD6BFA142DAA35300077AA68 /* Project object */;
 }
