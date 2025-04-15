@@ -58,6 +58,31 @@ struct SettingsView: View {
     }
 
     var body: some View {
+        #if os(iOS)
+        // iOS version - use NavigationView
+        NavigationView {
+            List {
+                ForEach(SettingsSection.allCases) { section in
+                    NavigationLink(
+                        destination: settingsDetailView(for: section)
+                            .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .topLeading)
+                            .padding(.top, 20),
+                        label: {
+                            HStack {
+                                Image(systemName: section.icon)
+                                    .frame(width: 24)
+                                Text(section.rawValue)
+                            }
+                        }
+                    )
+                }
+            }
+            .navigationTitle("Settings")
+            .listStyle(InsetGroupedListStyle())
+        }
+        .navigationViewStyle(StackNavigationViewStyle())
+        #else
+        // macOS version - use custom sidebar layout
         HStack(spacing: 0) {
             // Sidebar
             VStack(alignment: .leading, spacing: 0) {
@@ -98,26 +123,7 @@ struct SettingsView: View {
             
             ScrollView {
                 VStack(alignment: .leading, spacing: 20) {
-                    switch selectedSection {
-                    case .api:
-                        ApiSettingsView(apiKey: $apiKey)
-                    case .display:
-                        DisplaySettingsView(useMarkdownRenderer: $useMarkdownRenderer)
-                    case .appearance:
-                        AppearanceSettingsView(
-                            selectedColorScheme: Binding<AppColorScheme>(
-                                get: { selectedColorScheme },
-                                set: { appColorScheme = $0.rawValue }
-                            )
-                        )
-                    case .about:
-                        AboutView()
-                    case .tuning:
-                        TuningSettingsView(
-                            modelTemperature: $modelTemperature,
-                            modelMaxTokens: $modelMaxTokens
-                        )
-                    }
+                    settingsDetailView(for: selectedSection)
                 }
                 .padding(30)
                 .frame(maxWidth: .infinity, alignment: .leading)
@@ -125,6 +131,31 @@ struct SettingsView: View {
         }
         .frame(width: 600, height: 450)
         .preferredColorScheme(selectedColorScheme.colorScheme)
+        #endif
+    }
+    
+    @ViewBuilder
+    func settingsDetailView(for section: SettingsSection) -> some View {
+        switch section {
+        case .api:
+            ApiSettingsView(apiKey: $apiKey)
+        case .display:
+            DisplaySettingsView(useMarkdownRenderer: $useMarkdownRenderer)
+        case .appearance:
+            AppearanceSettingsView(
+                selectedColorScheme: Binding<AppColorScheme>(
+                    get: { selectedColorScheme },
+                    set: { appColorScheme = $0.rawValue }
+                )
+            )
+        case .tuning:
+            TuningSettingsView(
+                modelTemperature: $modelTemperature,
+                modelMaxTokens: $modelMaxTokens
+            )
+        case .about:
+            AboutView()
+        }
     }
 }
 
@@ -138,9 +169,11 @@ struct ApiSettingsView: View {
     
     var body: some View {
         VStack(alignment: .leading, spacing: 20) {
+            #if os(macOS)
             Text("API Settings")
                 .font(.title2)
                 .fontWeight(.bold)
+            #endif
             
             Text("API Key")
                 .font(.headline)
@@ -148,12 +181,22 @@ struct ApiSettingsView: View {
             HStack {
                 if isUsingDefaultKey {
                     SecureField("Default", text: $apiKey)
+                        #if os(iOS)
+                        .textFieldStyle(RoundedBorderTextFieldStyle())
+                        .frame(maxWidth: .infinity) // Use full width on iOS
+                        #else
                         .textFieldStyle(.roundedBorder)
                         .frame(maxWidth: 300)
+                        #endif
                 } else {
                     SecureField("", text: $apiKey)
+                        #if os(iOS)
+                        .textFieldStyle(RoundedBorderTextFieldStyle())
+                        .frame(maxWidth: .infinity) // Use full width on iOS
+                        #else
                         .textFieldStyle(.roundedBorder)
                         .frame(maxWidth: 300)
+                        #endif
                 }
                 
                 Button("Reset") {
@@ -174,6 +217,10 @@ struct ApiSettingsView: View {
                 .font(.caption)
                 .foregroundColor(.gray)
         }
+        #if os(iOS)
+        .padding([.horizontal, .bottom])
+        .navigationTitle("API Settings")
+        #endif
     }
 }
 
@@ -182,9 +229,11 @@ struct DisplaySettingsView: View {
     
     var body: some View {
         VStack(alignment: .leading, spacing: 20) {
+            #if os(macOS)
             Text("Display Settings")
                 .font(.title2)
                 .fontWeight(.bold)
+            #endif
             
             Text("Rendering Options")
                 .font(.headline)
@@ -196,6 +245,10 @@ struct DisplaySettingsView: View {
                 .font(.caption)
                 .foregroundColor(.gray)
         }
+        #if os(iOS)
+        .padding([.horizontal, .bottom])
+        .navigationTitle("Display Settings")
+        #endif
     }
 }
 
@@ -204,9 +257,11 @@ struct AppearanceSettingsView: View {
     
     var body: some View {
         VStack(alignment: .leading, spacing: 20) {
+            #if os(macOS)
             Text("Appearance")
                 .font(.title2)
                 .fontWeight(.bold)
+            #endif
             
             Text("Color Scheme")
                 .font(.headline)
@@ -218,22 +273,32 @@ struct AppearanceSettingsView: View {
                 }
             }
             .pickerStyle(.menu)
+            #if os(iOS)
+            .frame(maxWidth: .infinity, alignment: .leading)
+            #else
             .frame(width: 200, alignment: .leading)
+            #endif
             .padding(.leading, 0)
             
             Text("Change the color scheme of the APP.")
                 .font(.caption)
                 .foregroundColor(.gray)
         }
+        #if os(iOS)
+        .padding([.horizontal, .bottom])
+        .navigationTitle("Appearance")
+        #endif
     }
 }
 
 struct AboutView: View {
     var body: some View {
         VStack(alignment: .leading, spacing: 20) {
+            #if os(macOS)
             Text("About")
                 .font(.title2)
                 .fontWeight(.bold)
+            #endif
             
             HStack {
                 Text("Version")
@@ -243,14 +308,18 @@ struct AboutView: View {
             }
             .padding(.bottom,10)
             
-            Link("View GitHub",
-                  destination: URL(string: "https://www.example.com/TOS.html")!)
+            Link("View GitHub Repo",
+                  destination: URL(string: "https://github.com/Goge052215/deekseep")!)
             
             Divider()
             
             Text("Deekseep is a unofficial AI-Chat application powered by DeepSeek. It features LaTeX and Markdown rendering capabilities.")
                 .foregroundColor(.gray)
         }
+        #if os(iOS)
+        .padding([.horizontal, .bottom])
+        .navigationTitle("About")
+        #endif
     }
 }
 
@@ -260,9 +329,11 @@ struct TuningSettingsView: View {
     
     var body: some View {
         VStack(alignment: .leading, spacing: 20) {
+            #if os(macOS)
             Text("Model Tuning")
                 .font(.title2)
                 .fontWeight(.bold)
+            #endif
             
             // Temperature Control
             VStack(alignment: .leading, spacing: 8) {
@@ -272,7 +343,11 @@ struct TuningSettingsView: View {
                 
                 HStack {
                     Slider(value: $modelTemperature, in: 0.1...1.0, step: 0.1)
+                        #if os(iOS)
+                        .frame(maxWidth: .infinity)
+                        #else
                         .frame(maxWidth: 250)
+                        #endif
                     
                     Text(String(format: "%.1f", modelTemperature))
                         .monospacedDigit()
@@ -303,7 +378,11 @@ struct TuningSettingsView: View {
                                 .frame(width: 80, alignment: .leading)
                         }
                     )
+                    #if os(iOS)
+                    .frame(maxWidth: .infinity)
+                    #else
                     .frame(maxWidth: 120)
+                    #endif
                 }
                 .padding(5)
                 .background(
@@ -316,6 +395,10 @@ struct TuningSettingsView: View {
                     .foregroundColor(.gray)
             }
         }
+        #if os(iOS)
+        .padding([.horizontal, .bottom])
+        .navigationTitle("Model Tuning")
+        #endif
     }
 }
 

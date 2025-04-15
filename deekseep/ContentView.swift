@@ -84,7 +84,7 @@ struct ContentView: View {
                 HStack {
                     Image(systemName: "cpu")
                         .imageScale(.medium)
-                        .foregroundColor(Color(.labelColor))
+                        .foregroundColor(.primary)
                     
                     Menu {
                         ForEach(availableModels, id: \.self) { model in
@@ -108,12 +108,12 @@ struct ContentView: View {
                             Text(selectedModel)
                                 .font(.system(.body, design: .rounded))
                                 .fontWeight(.medium)
-                                .foregroundColor(Color(.labelColor))
+                                .foregroundColor(.primary)
                             
                             Image(systemName: "chevron.down")
                                 .imageScale(.small)
                                 .font(.caption)
-                                .foregroundColor(Color(.labelColor))
+                                .foregroundColor(.primary)
                         }
                         .padding(.horizontal, 10)
                         .padding(.vertical, 5)
@@ -371,8 +371,10 @@ struct MessageBubbleStyle: ViewModifier {
     ContentView()
 }
 
-// MARK: - Custom TextView Representable (macOS)
+// MARK: - Custom TextView Representable (Cross-Platform)
 
+#if os(macOS)
+// macOS Implementation
 struct RepresentableTextView: NSViewRepresentable {
     @Binding var text: String
     
@@ -432,4 +434,50 @@ struct RepresentableTextView: NSViewRepresentable {
         }
     }
 }
+
+#else
+// iOS Implementation
+import UIKit
+
+struct RepresentableTextView: UIViewRepresentable {
+    @Binding var text: String
+    
+    func makeUIView(context: Context) -> UITextView {
+        let textView = UITextView()
+        textView.delegate = context.coordinator
+        textView.font = UIFont.preferredFont(forTextStyle: .body)
+        textView.isEditable = true
+        textView.isSelectable = true
+        textView.backgroundColor = UIColor.systemBackground
+        textView.layer.cornerRadius = 8
+        textView.clipsToBounds = true
+        textView.textContainerInset = UIEdgeInsets(top: 12, left: 5, bottom: 12, right: 5)
+        textView.showsVerticalScrollIndicator = false
+        textView.showsHorizontalScrollIndicator = false
+        return textView
+    }
+    
+    func updateUIView(_ uiView: UITextView, context: Context) {
+        if uiView.text != text {
+            uiView.text = text
+        }
+    }
+    
+    func makeCoordinator() -> Coordinator {
+        Coordinator($text)
+    }
+    
+    class Coordinator: NSObject, UITextViewDelegate {
+        var text: Binding<String>
+        
+        init(_ text: Binding<String>) {
+            self.text = text
+        }
+        
+        func textViewDidChange(_ textView: UITextView) {
+            text.wrappedValue = textView.text
+        }
+    }
+}
+#endif
 
